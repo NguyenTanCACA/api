@@ -51,9 +51,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_4C58001C98C54D87A515A66680E6DEA5 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_43965D47497048A28667FC84DF8F1F21 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_926326FD24244DB0957CDFFAD598A126 }}
+          client-id: b9b35447-b1e0-40e9-bbf1-2f28c5ca263f
+          tenant-id: 4d327925-f745-4db5-9289-df0b98195088
+          subscription-id: 45d50957-fc22-4470-844c-6b24a72de918
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
@@ -62,4 +62,5 @@ jobs:
           app-name: 'sendmessagevbim'
           slot-name: 'Production'
           package: .
+
           
