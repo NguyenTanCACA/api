@@ -15,7 +15,7 @@ const tenantId = "4d327925-f745-4db5-9289-df0b98195088";
 const clientId = "b9b35447-b1e0-40e9-bbf1-2f28c5ca263f";
 const clientSecret = "QUb8Q~EXGfZz.iiZaVh9iVuJteamMm1u3-_EeaA1";
 const recipientEmail = "haipt@vbim.vn";
-
+ 
 let tokenCache = null;
 
 async function getAccessToken() {
