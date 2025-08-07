@@ -1,6 +1,14 @@
 const express = require("express");
 const axios = require("axios");
+const cors = require("cors");
+
 const app = express();
+
+// ✅ Cho phép CORS chỉ từ Power Pages
+app.use(cors({
+  origin: "https://vbim-revit.powerappsportals.com",
+}));
+
 app.use(express.json());
 
 const tenantId = "4d327925-f745-4db5-9289-df0b98195088";
