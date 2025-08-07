@@ -1,21 +1,15 @@
 const express = require("express");
 const axios = require("axios");
-const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
-
-// ✅ Cho phép CORS chỉ từ Power Pages
-app.use(cors({
-  origin: "https://vbim-revit.powerappsportals.com",
-}));
-
 app.use(express.json());
 
-const tenantId = "4d327925-f745-4db5-9289-df0b98195088";
-const clientId = "b9b35447-b1e0-40e9-bbf1-2f28c5ca263f";
-const clientSecret = "QUb8Q~EXGfZz.iiZaVh9iVuJteamMm1u3-_EeaA1";
-const recipientEmail = "haipt@vbim.vn";
- 
+const tenantId = process.env.TENANT_ID;
+const clientId = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
+const recipientEmail = process.env.RECIPIENT_EMAIL;
+
 let tokenCache = null;
 
 async function getAccessToken() {
@@ -45,13 +39,12 @@ app.post("/send", async (req, res) => {
     const message = req.body.message || "No message provided";
     const token = await getAccessToken();
 
-    // 1. Get user ID
     const userRes = await axios.get(`https://graph.microsoft.com/v1.0/users/${recipientEmail}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
+
     const userId = userRes.data.id;
 
-    // 2. Create or reuse chat
     const chatRes = await axios.post(
       "https://graph.microsoft.com/v1.0/chats",
       {
@@ -69,7 +62,6 @@ app.post("/send", async (req, res) => {
 
     const chatId = chatRes.data.id;
 
-    // 3. Send message
     await axios.post(
       `https://graph.microsoft.com/v1.0/chats/${chatId}/messages`,
       { body: { content: message } },
