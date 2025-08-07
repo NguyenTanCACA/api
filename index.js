@@ -3,6 +3,16 @@ const axios = require("axios");
 require("dotenv").config();
 
 const app = express();
+
+// ✅ THÊM CORS HEADER TẠI ĐÂY
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*"); // Hoặc ghi rõ tên miền cụ thể thay vì '*'
+  res.header("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  if (req.method === "OPTIONS") return res.sendStatus(204);
+  next();
+});
+
 app.use(express.json());
 
 const tenantId = process.env.TENANT_ID;
