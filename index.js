@@ -1,16 +1,12 @@
 const express = require("express");
 const axios = require("axios");
-const cors = require("cors");
 require("dotenv").config();
+const cors = require("cors");
 
 const app = express();
 
-// 🔹 Cho phép CORS cho mọi domain (nếu bạn muốn chỉ định domain, xem dưới)
-app.use(cors({
-  origin: '*', // hoặc thay bằng: ['https://vbim-revit.powerappsportals.com']
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+
+app.use(cors());
 
 app.use(express.json());
 
