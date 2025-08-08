@@ -9,9 +9,9 @@ console.log("🚀 App is setting up routes and middlewares...111");
 app.use(express.json());
 console.log("🚀 App is setting up routes and middlewares...");
 
-const tenantId = process.env.TENANT_ID;
-const clientId = process.env.CLIENT_ID;
-const clientSecret = process.env.CLIENT_SECRET;
+const tenantId = 4d327925-f745-4db5-9289-df0b98195088;
+const clientId = baf69d82-a095-4237-8f30-ff911dbb33fd;
+const clientSecret = .AX8Q~W~sn38u9UoieFgRN1csLlb-CVFRCHDMaqs;
 const recipientEmail = process.env.RECIPIENT_EMAIL;
 
 let tokenCache = null;
