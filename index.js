@@ -1,18 +1,25 @@
 const express = require("express");
 const axios = require("axios");
-// require("dotenv").config();
-const cors = require("cors");
+require("dotenv").config();
+
 const app = express();
+
+// ✅ THÊM CORS HEADER TẠI ĐÂY
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "*"); // Hoặc ghi rõ tên miền cụ thể thay vì '*'
+//   res.header("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+//   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//   if (req.method === "OPTIONS") return res.sendStatus(204);
+//   next();
+// });
 app.use(cors());
-console.log("🚀 App is setting up routes and middlewares...111");
 
 app.use(express.json());
-console.log("🚀 App is setting up routes and middlewares...");
 
-const tenantId = '4d327925-f745-4db5-9289-df0b98195088';
-const clientId = 'baf69d82-a095-4237-8f30-ff911dbb33fd';
-const clientSecret = '.AX8Q~W~sn38u9UoieFgRN1csLlb-CVFRCHDMaqs';
-const recipientEmail = 'haipt@vbim.vn';
+const tenantId = process.env.TENANT_ID;
+const clientId = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
+const recipientEmail = process.env.RECIPIENT_EMAIL;
 
 let tokenCache = null;
 
@@ -38,12 +45,7 @@ async function getAccessToken() {
   return tokenCache.token;
 }
 
-app.get("/", (req, res) => {
-  res.send("✅ API is running.");
-});
-
 app.post("/send", async (req, res) => {
-  console.log("📩 Received POST /send");
   try {
     const message = req.body.message || "No message provided";
     const token = await getAccessToken();
@@ -86,4 +88,3 @@ app.post("/send", async (req, res) => {
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`✅ API running at http://localhost:${port}`));
-// console.log(`Server is running on port ${port}`);
