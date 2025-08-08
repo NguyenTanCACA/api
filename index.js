@@ -38,6 +38,10 @@ async function getAccessToken() {
   return tokenCache.token;
 }
 
+app.get("/", (req, res) => {
+  res.send("✅ API is running.");
+});
+
 app.post("/send", async (req, res) => {
   console.log("📩 Received POST /send");
   try {
