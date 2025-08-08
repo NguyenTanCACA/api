@@ -5,8 +5,10 @@ const cors = require("cors");
 const app = express();
 app.use(cors());
 console.log("🚀 App is setting up routes and middlewares...111");
+
 app.use(express.json());
 console.log("🚀 App is setting up routes and middlewares...");
+
 const tenantId = process.env.TENANT_ID;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
