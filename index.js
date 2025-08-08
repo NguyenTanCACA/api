@@ -1,6 +1,6 @@
 const express = require("express");
 const axios = require("axios");
-require("dotenv").config();
+// require("dotenv").config();
 const cors = require("cors");
 const app = express();
 app.use(cors());
@@ -9,10 +9,10 @@ console.log("🚀 App is setting up routes and middlewares...111");
 app.use(express.json());
 console.log("🚀 App is setting up routes and middlewares...");
 
-const tenantId = 4d327925-f745-4db5-9289-df0b98195088;
-const clientId = baf69d82-a095-4237-8f30-ff911dbb33fd;
-const clientSecret = .AX8Q~W~sn38u9UoieFgRN1csLlb-CVFRCHDMaqs;
-const recipientEmail = process.env.RECIPIENT_EMAIL;
+const tenantId = '4d327925-f745-4db5-9289-df0b98195088';
+const clientId = 'baf69d82-a095-4237-8f30-ff911dbb33fd';
+const clientSecret = '.AX8Q~W~sn38u9UoieFgRN1csLlb-CVFRCHDMaqs';
+const recipientEmail = 'haipt@vbim.vn';
 
 let tokenCache = null;
 
