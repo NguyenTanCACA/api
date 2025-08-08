@@ -1,11 +1,17 @@
 const express = require("express");
-const cors = require("cors"); // Thêm dòng này
 const axios = require("axios");
+const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
 
-app.use(cors()); // ⭐ Phải thêm dòng này ngay sau khai báo app
+// 🔹 Cho phép CORS cho mọi domain (nếu bạn muốn chỉ định domain, xem dưới)
+app.use(cors({
+  origin: '*', // hoặc thay bằng: ['https://vbim-revit.powerappsportals.com']
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
 app.use(express.json());
 
 const tenantId = process.env.TENANT_ID;
@@ -42,12 +48,9 @@ app.post("/send", async (req, res) => {
     const message = req.body.message || "No message provided";
     const token = await getAccessToken();
 
-    const userRes = await axios.get(
-      `https://graph.microsoft.com/v1.0/users/${recipientEmail}`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
+    const userRes = await axios.get(`https://graph.microsoft.com/v1.0/users/${recipientEmail}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
     const userId = userRes.data.id;
 
@@ -77,9 +80,7 @@ app.post("/send", async (req, res) => {
     res.status(200).json({ success: true, sent: message });
   } catch (err) {
     console.error("Error:", err.response?.data || err.message);
-    res
-      .status(500)
-      .json({ error: err.message, details: err.response?.data });
+    res.status(500).json({ error: err.message, details: err.response?.data });
   }
 });
 
