@@ -4,9 +4,9 @@ require("dotenv").config();
 const cors = require("cors");
 const app = express();
 app.use(cors());
-
+console.log("🚀 App is setting up routes and middlewares...111");
 app.use(express.json());
-
+console.log("🚀 App is setting up routes and middlewares...");
 const tenantId = process.env.TENANT_ID;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
@@ -37,6 +37,7 @@ async function getAccessToken() {
 }
 
 app.post("/send", async (req, res) => {
+  console.log("📩 Received POST /send");
   try {
     const message = req.body.message || "No message provided";
     const token = await getAccessToken();
