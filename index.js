@@ -1,19 +1,11 @@
 const express = require("express");
+const cors = require("cors"); // Thêm dòng này
 const axios = require("axios");
 require("dotenv").config();
 
 const app = express();
 
-// ✅ THÊM CORS HEADER TẠI ĐÂY
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "*"); // Hoặc ghi rõ tên miền cụ thể thay vì '*'
-//   res.header("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
-//   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-//   if (req.method === "OPTIONS") return res.sendStatus(204);
-//   next();
-// });
-app.use(cors());
-
+app.use(cors()); // ⭐ Phải thêm dòng này ngay sau khai báo app
 app.use(express.json());
 
 const tenantId = process.env.TENANT_ID;
@@ -50,9 +42,12 @@ app.post("/send", async (req, res) => {
     const message = req.body.message || "No message provided";
     const token = await getAccessToken();
 
-    const userRes = await axios.get(`https://graph.microsoft.com/v1.0/users/${recipientEmail}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const userRes = await axios.get(
+      `https://graph.microsoft.com/v1.0/users/${recipientEmail}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
 
     const userId = userRes.data.id;
 
@@ -82,7 +77,9 @@ app.post("/send", async (req, res) => {
     res.status(200).json({ success: true, sent: message });
   } catch (err) {
     console.error("Error:", err.response?.data || err.message);
-    res.status(500).json({ error: err.message, details: err.response?.data });
+    res
+      .status(500)
+      .json({ error: err.message, details: err.response?.data });
   }
 });
 
